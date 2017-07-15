@@ -1,0 +1,21 @@
+.hero {
+  background: url(./herobg.jpg) no-repeat;
+  background-size: auto 100%;
+  background-position: center;
+  height: 100vh;
+  color: #FFF;
+}
+
+@media screen and (max-width: 680px) {
+  .hero {
+    background: url(./herobg.jpg) no-repeat;
+    background-size: auto 100%;
+    background-position: center;
+    height: 100vh;
+    color: #FFF;
+  }
+}
+
+.start-button {
+  padding-top: 20px;
+}
