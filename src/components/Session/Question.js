@@ -3,11 +3,6 @@ import React, { Component } from 'react';
 class Question extends Component {
   constructor() {
     super();
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(e) {
-    this.props.saveProgress(e);
   }
 
   render() {
@@ -20,8 +15,8 @@ class Question extends Component {
           </label>
           {this.props.name === "N" && (
             <div className="feelings">
-              {this.props.formData.N.map(data => (
-                <span className="badge badge-success">{data}</span>
+              {this.props.formData.N.map((data, i) => (
+                <span key={i} className="badge badge-info">{data}</span>
               ))}
             </div>
           )}

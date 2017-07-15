@@ -9,6 +9,25 @@ import UserInfo from './LandingPage/UserInfo';
 import NewSession from './Session/NewSession';
 import ResultsPage from './Session/ResultsPage';
 
+const questions = [
+  {
+    step: 'Recognize',
+    text: 'Why did you start this session?'
+  },
+  {
+    step: 'Accept',
+    text: 'What are you craving with right now?'
+  },
+  {
+    step: 'Investigate',
+    text: 'On a scale of 1-3, with 3 being strongest, how strong is this craving?'
+  },
+  {
+    step: 'Note',
+    text: 'Think about how your body is feeling. Focus in on each feeling as it comes, and put it into words. Continue until the craving weakens enough for you to put it aside. Separate phrases with a comma.'
+  }
+];
+
 class App extends Component {
   constructor() {
     super();
@@ -65,7 +84,11 @@ class App extends Component {
           render={() => (this.state.complete ?
                           <Redirect to="/results" />
                         :
-                          <NewSession saveSession={this.saveSession} />
+                          <NewSession
+                            questions={questions}
+                            saveSession={this.saveSession}
+                            name={this.state.name}
+                          />
                         )}
         />
         <Route
@@ -73,7 +96,7 @@ class App extends Component {
           render={() => <ResultsPage
                           name={this.state.name}
                           responses={this.state.responses}
-                          feelings={this.state.feelings}
+                          questions={questions}
                         />}
         />
       </div>

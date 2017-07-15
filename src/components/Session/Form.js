@@ -9,7 +9,8 @@ class Form extends Component {
       A: '',
       I: '',
       N: [''],
-      step: 0
+      step: 0,
+      error: ''
     };
     this.previousStep = this.previousStep.bind(this);
     this.nextStep = this.nextStep.bind(this);
@@ -26,6 +27,15 @@ class Form extends Component {
   }
 
   nextStep() {
+    // Prevent them from going forward if they haven't answered questions
+    if (this.state.step === 0 && this.state.R === '' ||
+        this.state.step === 1 && this.state.A === '' ||
+        this.state.step === 2 && this.state.I === '' ||
+        this.state.step === 3 && this.state.N === '') {
+      this.state.error = 'You must answer the question before moving forward';
+      return;
+    }
+
     let step = this.state.step + 1;
     this.setState({
       step
@@ -33,17 +43,17 @@ class Form extends Component {
   }
 
   saveProgress(e) {
-    console.log(e.target.name);
-    if (e.target.name === "N") {
+    if (e.target.name === 'N') {
       let feelings = e.target.value.split(',');
       this.setState({
         N: feelings
       });
-    } else {
-      this.setState({
-        [e.target.name]: e.target.value
-      });
+      return;
     }
+
+    this.setState({
+      [e.target.name]: e.target.value
+    });
   }
 
   renderQuestion() {
@@ -94,16 +104,15 @@ class Form extends Component {
     }
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit() {
     this.props.saveSession(this.state);
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <div>
         {this.renderQuestion()}
-      </form>
+      </div>
     );
   }
 }

@@ -10,13 +10,20 @@ class UserInfo extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.validateEmail = this.validateEmail.bind(this);
+    // this.validateEmail = this.validateEmail.bind(this);
   }
 
   handleChange(e) {
-    const target = e.target;
-    const value = target.value;
-    const name = target.id;
+    let target = e.target;
+    let value = target.value;
+    let name = target.id;
+
+    if (name === "name" && value) {
+     let capitalized = value.split('');
+     capitalized[0] = capitalized[0].toUpperCase();
+     value = capitalized.join('');
+    }
+
     this.setState({
       [name]: value
     });
@@ -24,19 +31,20 @@ class UserInfo extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    if (this.validateEmail()) {
-      this.props.saveUser(this.state);
-    } else {
-      this.setState({
-        error: 'Please type a valid email address'
-      });
-    }
+    this.props.saveUser(this.state);
+    // if (this.validateEmail()) {
+    //   this.props.saveUser(this.state);
+    // } else {
+    //   this.setState({
+    //     error: 'Please type a valid email address'
+    //   });
+    // }
   }
 
-  validateEmail() {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(this.state.email);
-  }
+  // validateEmail() {
+  //   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  //   return re.test(this.state.email);
+  // }
 
   render() {
     return (
@@ -54,7 +62,7 @@ class UserInfo extends Component {
                 onChange={this.handleChange}
               />
             </div>
-            <div className="form-group">
+            {/* <div className="form-group">
               <label htmlFor="name">Email</label>
               <input
                 className="form-control"
@@ -63,7 +71,7 @@ class UserInfo extends Component {
                 onChange={this.handleChange}
               />
               <div className="form-group">{this.state.error}</div>
-            </div>
+            </div> */}
             <button className="btn btn-large btn-primary">Start Session</button>
           </fieldset>
         </form>
